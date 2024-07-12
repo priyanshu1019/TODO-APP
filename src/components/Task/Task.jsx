@@ -4,13 +4,21 @@ import "./task.css";
 import { useContext } from 'react';
 import TaskContext from '../../context/TaskContext';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
 function Task({ task, id }) {
     const { dispatch } = useContext(TaskContext);
 
-    const handleRemove = (e) => {
+    const handleRemove = async(e) => {
         e.preventDefault();
         
-
+        try {
+            const res = await axios.delete(`/tasks/:${id}`,);
+            console.log("Task added successfully:", res.data);
+            // Optionally handle toast or notification here
+        } catch (error) {
+            console.error("Error adding task:", error);
+            // Handle error scenarios
+        }
         dispatch({
             type: "REMOVE_TASK",
             id
